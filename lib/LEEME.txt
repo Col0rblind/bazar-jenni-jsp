@@ -1,0 +1,6 @@
+Pon aqui el driver JDBC de MySQL (un solo archivo .jar):
+
+  mysql-connector-j-8.4.0.jar
+  https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.4.0/mysql-connector-j-8.4.0.jar
+
+(Cualquier 8.x o 9.x sirve.) build.sh / build.bat lo copian a WEB-INF/lib.

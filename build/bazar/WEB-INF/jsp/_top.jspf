@@ -1,0 +1,35 @@
+<%@ page contentType="text/html; charset=UTF-8" import="java.util.*,bazar.*" %>
+<%
+    String cp = request.getContextPath();
+    String sec = (String) request.getAttribute("seccion");
+    String[][] pestanas = {{"caja","Caja","caja"},{"inventario","Inventario","box"},{"proveedores","Proveedores","truck"},
+        {"clientes","Clientes","users"},{"apartados","Apartados","clock"},{"ventas","Ventas","chart"},{"corte","Corte","cash"}};
+%>
+<!DOCTYPE html>
+<html lang="es" data-th="<%= U.e(request.getAttribute("tema")) %>">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= U.e(request.getAttribute("titulo")) %> · Bazar</title>
+<link rel="icon" href="<%= cp %>/img/icon-180.png">
+<link rel="stylesheet" href="<%= cp %>/css/bazar.css">
+</head>
+<body>
+<nav>
+<% for (String[] t : pestanas) { %>
+  <a href="<%= cp %>/<%= t[0] %>"<%= t[0].equals(sec) ? " class=\"on\"" : "" %>><%= U.icono(t[2]) %><%= t[1] %></a>
+<% } %>
+  <form method="post" action="<%= cp %>/tema">
+    <input type="hidden" name="volver" value="<%= U.e(request.getAttribute("ruta")) %>">
+    <select name="tema" aria-label="Tema" onchange="this.form.submit()">
+    <% for (String[] t : U.TEMAS) { %>
+      <option value="<%= t[0] %>"<%= t[0].equals(request.getAttribute("tema")) ? " selected" : "" %>><%= U.e(t[1]) %></option>
+    <% } %>
+    </select>
+    <noscript><button>Aplicar</button></noscript>
+  </form>
+</nav>
+<main>
+<% if (request.getAttribute("msg") != null) { %>
+  <p class="msg<%= "err".equals(request.getAttribute("msgTipo")) ? " err" : "" %>" role="status"><%= U.e(request.getAttribute("msg")) %></p>
+<% } %>
